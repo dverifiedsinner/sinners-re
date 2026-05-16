@@ -1,0 +1,6 @@
+{
+  "name": "Aura Preorder",
+  "description": "Exclusive preorder platform for limited edition minimal technology and high-end lifestyle goods.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
