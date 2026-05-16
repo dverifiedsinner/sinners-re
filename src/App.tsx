@@ -319,18 +319,27 @@ export default function App() {
         <span className="font-display font-medium text-lg uppercase tracking-widest text-white">AURA</span>
       </div>
       
-      <div className="hidden md:flex gap-12 items-center text-[10px] font-bold uppercase tracking-[0.3em] text-white">
+      <div className="hidden md:flex gap-10 items-center text-[10px] font-bold uppercase tracking-[0.3em] text-white">
         <button onClick={() => setActiveView('landing')} className="hover:text-aura-gold transition-colors">Curations</button>
+        <button onClick={() => setActiveView('track')} className="hover:text-aura-gold transition-colors">Track Order</button>
+        <button onClick={() => {
+          const supportSection = document.getElementById('support-center');
+          if (supportSection) supportSection.scrollIntoView({ behavior: 'smooth' });
+          else setActiveView('landing'); 
+        }} className="hover:text-aura-gold transition-colors">Concierge</button>
+        
+        <div className="h-4 w-px bg-white/10 mx-2" />
+
         {user ? (
           <>
-            <button onClick={() => setActiveView('dashboard')} className="hover:text-aura-gold transition-colors">My Aura</button>
+            <button onClick={() => setActiveView('dashboard')} className="hover:text-aura-gold transition-colors text-aura-gold/80">My Aura</button>
             <button onClick={() => setActiveView('wallet')} className="hover:text-aura-gold transition-colors flex items-center gap-2">
               <Wallet size={12} className="text-aura-gold" /> ${user.walletBalance}
             </button>
             {user.role === 'admin' && (
-              <button onClick={() => setActiveView('admin')} className="text-aura-gold hover:text-white transition-colors">Control</button>
+              <button onClick={() => setActiveView('admin')} className="text-aura-gold hover:text-white transition-colors border border-aura-gold/30 px-3 py-1 rounded-full bg-aura-gold/5">Control</button>
             )}
-            <button onClick={handleLogout} className="hover:text-aura-gold transition-colors flex items-center gap-2"><LogOut size={14} /> Exit</button>
+            <button onClick={handleLogout} className="hover:text-white transition-colors flex items-center gap-2 text-white/40"><LogOut size={14} /> Exit</button>
           </>
         ) : (
           <button onClick={() => setActiveView('auth')} className="bg-white text-aura-black px-6 py-2 rounded-full hover:bg-aura-silver transition-all shadow-lg">Sign In</button>
@@ -348,14 +357,23 @@ export default function App() {
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 top-20 bg-aura-black z-40 p-8 flex flex-col gap-8 md:hidden"
+            className="fixed inset-0 top-20 bg-aura-black z-40 p-8 flex flex-col gap-6 md:hidden overflow-y-auto"
           >
             <button onClick={() => { setActiveView('landing'); setIsMenuOpen(false); }} className="text-2xl font-display font-bold uppercase text-left border-b border-white/5 pb-4">Curations</button>
+            <button onClick={() => { setActiveView('track'); setIsMenuOpen(false); }} className="text-2xl font-display font-bold uppercase text-left border-b border-white/5 pb-4">Track Order</button>
+            <button onClick={() => { 
+                setActiveView('landing'); 
+                setIsMenuOpen(false);
+                setTimeout(() => {
+                  document.getElementById('support-center')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }} className="text-2xl font-display font-bold uppercase text-left border-b border-white/5 pb-4">Concierge</button>
+            
             {user ? (
               <>
-                <button onClick={() => { setActiveView('dashboard'); setIsMenuOpen(false); }} className="text-2xl font-display font-bold uppercase text-left border-b border-white/5 pb-4">Dashboard</button>
-                <button onClick={() => { setActiveView('wallet'); setIsMenuOpen(false); }} className="text-2xl font-display font-bold uppercase text-left border-b border-white/5 pb-4 flex justify-between items-center">
-                  Wallet <span>${user.walletBalance}</span>
+                <button onClick={() => { setActiveView('dashboard'); setIsMenuOpen(false); }} className="text-2xl font-display font-bold uppercase text-left border-b border-white/5 pb-4 text-aura-gold">My Aura</button>
+                <button onClick={() => { setActiveView('wallet'); setIsMenuOpen(false); }} className="text-2xl font-display font-bold uppercase text-left border-b border-white/5 pb-4 flex justify-between items-center px-2 py-2 bg-white/5 rounded-xl">
+                  Wallet <span className="text-aura-gold">${user.walletBalance}</span>
                 </button>
                 {user.role === 'admin' && (
                   <button onClick={() => { setActiveView('admin'); setIsMenuOpen(false); }} className="text-2xl font-display font-bold uppercase text-left border-b border-white/5 pb-4 text-aura-gold">Admin Panel</button>
